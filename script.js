@@ -1,4 +1,5 @@
 function playerPlay() {
+  /**This function asks the player to enter their play for the current round of the game**/
   let playerSelectionPrompt = prompt("Enter your selection for this Rock Paper Scissors round!");
   playerSelectionPrompt = playerSelectionPrompt.toLowerCase()
   let playerSelection = 0;
@@ -14,21 +15,17 @@ function playerPlay() {
       break;
   }
   return Number(playerSelection);
-  /**if (playerSelection=="rock" || playerSelection=="paper" || playerSelection=="scissors")
-  {playRound}
-  else
-  {alert("Incorrect selection, please enter either 'rock', 'paper' or 'scissors'");
-  }
-  **/
-}
+ }
 
 function computerPlay() {
+  /**This function generates the computer's play for the current round of the game**/
   let computerSelection = Math.floor(Math.random() * 3) + 1;
 
   return computerSelection;
 }
 
 function playRound(playerSelection, computerSelection) {
+  /**This function receives both the computer's and the player's plays and determines who have won the current round of the game**/
   let roundResult = ""
   let delta = Math.abs(computerSelection - playerSelection);
   if (playerSelection == computerSelection) {
@@ -50,6 +47,7 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function Humanize(selection) {
+  /**This function converts the indexes of the plays (1 - rock, 2 - paper, 3 - scissors) into their names**/
   switch (selection) {
     case 1:
       return "rock"
@@ -64,6 +62,7 @@ function Humanize(selection) {
 }
 
 function playGame() {
+  /**This function plays 5 rounds of the game and keeps the scores**/
   let playerScore = 0;
   let computerScore = 0;
   let finalResult = ""
@@ -94,6 +93,7 @@ function playGame() {
 
 }
 function printRoundResult(i, computerSelection, playerSelection, roundresult, computerScore, playerScore){
+  /**This function outputs the results for the current round of the game to the console log**/
  console.log("Round " + i + ": The computer chose: " + Humanize(computerSelection) + "; The player chose: " + Humanize(playerSelection) + "; The result is: " + roundresult + ". The score is: " + computerScore + " for computer, and " + playerScore + " for player")
 }
 playGame()
