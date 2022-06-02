@@ -1,6 +1,7 @@
 function playerPlay() {
   /**This function asks the player to enter their play for the current round of the game**/
-  let playerSelectionPrompt = prompt("Enter your selection for this Rock Paper Scissors round!");
+  let playerBox = document.querySelector("#playerPlay")
+  let playerSelectionPrompt = playerBox.value
   playerSelectionPrompt = playerSelectionPrompt.toLowerCase()
   let playerSelection = 0;
   switch (playerSelectionPrompt) {
@@ -61,39 +62,60 @@ function Humanize(selection) {
   }
 }
 
-function playGame() {
+function playGame(scores) {
   /**This function plays 5 rounds of the game and keeps the scores**/
-  let playerScore = 0;
-  let computerScore = 0;
+
   let finalResult = ""
   let computerSelection
   let playerSelection
   let roundresult
-  for (let i = 1; i <= 5; i++) {
+  scores[0]++
     computerSelection = computerPlay()
     playerSelection = playerPlay()
     roundresult = playRound(playerSelection, computerSelection)
     if (roundresult == "Computer won!") {
-      computerScore++
+      scores[2]++
     } else if (roundresult == "Player won!") {
-      playerScore++
+      scores[1]++
     }
-   printRoundResult(i, computerSelection, playerSelection, roundresult, computerScore, playerScore)
-  }
-
-  if (computerScore > playerScore) {
-    console.log("The game is over, the computer has won!")
+   printRoundResult(scores[0], computerSelection, playerSelection, roundresult, scores[2], scores[1])
+  
+if (scores[0]>=5){
+let scoreboard = document.querySelector("#scoreboard")
+  if (scores[2] > scores[1]) {
+    scoreboard.textContent =scoreboard.textContent + "\nThe game is over, the computer has won!"
   } 
-  else if (computerScore < playerScore) {
-    console.log("The game is over, the player has won!")
+  else if (scores[2] < scores[1]) {
+    scoreboard.textContent =scoreboard.textContent + "\nThe game is over, the player has won!"
   } 
   else {
-    console.log("The game is over, it's a draw!")
+scoreboard.textContent =scoreboard.textContent + "\nThe game is over, it's a draw!"
   }
+const playerbox = document.querySelector('#playerPlay')
+playerbox.setAttribute('disabled','')
+const playbtn = document.querySelector('#playRound')
+playbtn.setAttribute('disabled','')
+}
 
 }
 function printRoundResult(i, computerSelection, playerSelection, roundresult, computerScore, playerScore){
   /**This function outputs the results for the current round of the game to the console log**/
- console.log("Round " + i + ": The computer chose: " + Humanize(computerSelection) + "; The player chose: " + Humanize(playerSelection) + "; The result is: " + roundresult + ". The score is: " + computerScore + " for computer, and " + playerScore + " for player")
+  let scoreboard = document.querySelector("#scoreboard");
+ scoreboard.textContent=scoreboard.textContent + "Round " + i + ": The computer chose: " + Humanize(computerSelection) + "; The player chose: " + Humanize(playerSelection) + "; The result is: " + roundresult + ". The score is: " + computerScore + " for computer, and " + playerScore + " for player\n"
 }
-playGame()
+
+function newGame(scores){
+const playerbox = document.querySelector('#playerPlay')
+playerbox.value =""
+playerbox.removeAttribute('disabled')
+const playbtn = document.querySelector('#playRound')
+playbtn.removeAttribute('disabled')
+document.querySelector('#scoreboard').textContent=""
+scores = [0, 0, 0]
+}
+
+let scores=[0 , 0, 0];
+const newGameBtn = document.querySelector("#newGame")
+newGameBtn.addEventListener('click', ()=>{newGame(scores)})
+const playBtn = document.querySelector("#playRound")
+playBtn.addEventListener('click', ()=>{playGame(scores)})
